@@ -144,5 +144,12 @@
             </plugin>
         </plugins>
     </build>
+    
+    <developers>
+    	<developer>
+    		<name>Allan Tricarico</name>
+    		<email>allan.ts@outlook.com</email>
+    	</developer>
+    </developers>
 
 </project>
