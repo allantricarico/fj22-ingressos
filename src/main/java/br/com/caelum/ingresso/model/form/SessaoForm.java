@@ -14,6 +14,8 @@ import br.com.caelum.ingresso.model.Sessao;
 
 public class SessaoForm {
 
+	private Integer id;
+	
 	@NotNull
 	private Integer salaId;
 
@@ -55,6 +57,15 @@ public class SessaoForm {
 	public void setFilmeId(Integer filmeId) {
 		this.filmeId = filmeId;
 	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	
 	
 	
 
