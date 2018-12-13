@@ -16,6 +16,7 @@ import br.com.caelum.ingresso.dao.SalaDao;
 import br.com.caelum.ingresso.dao.SessaoDao;
 import br.com.caelum.ingresso.model.Sessao;
 import br.com.caelum.ingresso.model.form.SessaoForm;
+import br.com.caelum.ingresso.validacao.GerenciadorDeSessao;
 
 @Controller
 public class SessaoController {
@@ -28,7 +29,8 @@ public class SessaoController {
 	private SessaoDao sessaoDao;
 
 	@GetMapping("/admin/sessao")
-	public ModelAndView form(@RequestParam("salaId") Integer salaId, SessaoForm form) {
+	public ModelAndView form(@RequestParam("salaId") Integer salaId,
+			SessaoForm form) {
 
 		form.setSalaId(salaId);
 
@@ -50,11 +52,18 @@ public class SessaoController {
 
 		Sessao sessao = form.toSessao(salaDao, filmeDao);
 
-		sessaoDao.save(sessao);
+		List<Sessao> sessoesDaSala = sessaoDao.buscaSessoesDaSala(sessao
+				.getSala());
 
-		return new ModelAndView("redirect:/admin/sala" + form.getSalaId()
-				+ "/sessoes");
+		GerenciadorDeSessao gerenciador = new GerenciadorDeSessao(sessoesDaSala);
 
+		if (gerenciador.cabe(sessao)) {
+			sessaoDao.save(sessao);
+			return new ModelAndView("redirect:/admin/sala" + form.getSalaId()
+					+ "/sessoes");
+		}
+
+		return form(form.getSalaId(), form);
 	}
 
 }
