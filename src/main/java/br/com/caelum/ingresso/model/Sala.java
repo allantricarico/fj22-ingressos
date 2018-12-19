@@ -25,7 +25,7 @@ public class Sala {
     @OneToMany(fetch = FetchType.EAGER)
     private List<Lugar> lugares = new ArrayList<>();
     
-    private BigDecimal preco;
+    private BigDecimal preco = BigDecimal.ZERO;
 
     /**
      * @deprecated hibernate only
@@ -87,4 +87,6 @@ public class Sala {
         Optional<Lugar> optional = this.lugares.stream().filter((x) -> fileira.equals(x.getFileira()) && posicao.equals(x.getPosicao())).findFirst();
         return optional.get().getId();
     }
+    
+    
 }
